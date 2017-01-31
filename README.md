@@ -8,7 +8,7 @@ Writer is not implemented
 Usage
 --
 
-```c++11
+```c++
 #include <fstream>
 #include <chunked.hpp>
 #include <iostream>
