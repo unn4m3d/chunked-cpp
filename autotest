@@ -1,0 +1,14 @@
+#!/bin/bash
+# A script to run tests
+# We must obtain data first to test reader
+# Crystal implementation is used
+echo "Generating data..."
+cd chunked
+crystal deps
+# We get temp file name used by first write test
+FILENAME=$(CHUNKED_DEBUG=1 crystal spec | grep 'Writing to' | head -n 1 | sed 's/^.*to //' )
+cd ..
+echo "Testing..."
+make test TEST_FILE="$FILENAME"
+echo "Cleaning up workspace..."
+make clean
