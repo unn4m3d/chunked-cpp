@@ -1,30 +1,32 @@
-     ,-----.,--.                  ,--. ,---.   ,--.,------.  ,------.
-    '  .--./|  | ,---. ,--.,--. ,-|  || o   \  |  ||  .-.  \ |  .---'
-    |  |    |  || .-. ||  ||  |' .-. |`..'  |  |  ||  |  \  :|  `--, 
-    '  '--'\|  |' '-' ''  ''  '\ `-' | .'  /   |  ||  '--'  /|  `---.
-     `-----'`--' `---'  `----'  `---'  `--'    `--'`-------' `------'
-    ----------------------------------------------------------------- 
+chunked-cpp
+==
 
+C++11 implementation of [chunked](https://github.com/unn4m3d/chunked)
 
-Hi there! Welcome to Cloud9 IDE!
+Writer is not implemented
 
-To get you started with C/C++, we have created some small hello world
-applications and a Makefile.
+Usage
+--
 
-Have a look at the files, and use the terminal to build them:
+```c++11
+#include <fstream>
+#include <chunked.hpp>
+#include <iostream>
 
-    $ make
-    $ ./hello-c-world
-    $ ./hello-cpp-world
+using chunked::reader;
 
-We're sure you can take it from there. Go ahead and edit the code, 
-or add some new files. It's all up to you! 
+std::ifstream str("/path/to/file", std::ifstream::binary);
+reader<size_t, size_t> rd(str);
 
-Happy coding!
-The Cloud9 IDE team
+/*chunked::chunk_info<size_t, size_t>*/
+auto cinfo = rd.open_chunk();
 
+std::cout << cinfo.get_index() << " " << cinfo.get_size() << std::endl;
 
-## Support & Documentation
+/*chunked::ichunk<size_t, size_t>*/
+auto chunk = rd.current_chunk(c);
 
-Visit http://docs.c9.io for support, or to learn more about using Cloud9 IDE. 
-To watch some training videos, visit http://www.youtube.com/user/c9ide
+/*chunk.buffer is a vector<char>*/
+std::cout << chunk.buffer.size() << std::endl;
+
+```
